@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Alumnos Admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS Links -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/datatables.min.css" rel="stylesheet">
+    <link href="css/datatables.css" rel="stylesheet">
+    <link href="css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <style>
+        .btn-container {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Container for the button -->
+    <div class="container btn-container">
+        <button type="button" class="btn btn-success" onclick="mostrarFormulario()">Agregar Nuevo Alumno</button>
+    </div>
+
+    <!-- Formulario para agregar alumno -->
+    <div id="formularioAlumno" style="display:none;">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Agregar Alumno</h6>
+            </div>
+            <div class="card-body">
+                <form id="formAlumno">
+                    <div class="form-group">
+                        <label for="nombre">Nombre:</label>
+                        <input id="nombre" name="nombre" class="form-control" type="text" placeholder="Nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="apellidoPaterno">Apellido Paterno:</label>
+                        <input id="apellidoPaterno" name="apellidoPaterno" class="form-control" type="text" placeholder="Apellido Paterno">
+                    </div>
+                    <div class="form-group">
+                        <label for="apellidoMaterno">Apellido Materno:</label>
+                        <input id="apellidoMaterno" name="apellidoMaterno" class="form-control" type="text" placeholder="Apellido Materno">
+                    </div>
+                    <div class="form-group">
+                        <label for="edad">Edad:</label>
+                        <input id="edad" name="edad" class="form-control" type="number" placeholder="Edad">
+                    </div>
+                    <div class="form-group">
+                        <label for="genero">Género:</label>
+                        <select id="genero" name="genero" class="form-control">
+                            <option value="">Seleccionar Género</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-success" onclick="guardarAlumno()">Guardar</button>
+                    <button type="button" class="btn btn-secondary" onclick="ocultarFormulario()">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla de alumnos -->
+    <div class="container mt-3">
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="tabla_Alumnos" width="100%" cellspacing="0">
+                        <thead class="bg-success text-white">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Apellido Paterno</th>
+                                <th>Apellido Materno</th>
+                                <th>Edad</th>
+                                <th>Género</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dynamic rows will be added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Scripts -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/datatables.min.js"></script>
+    <script src="js/datatables.js"></script>
+    <script>
+        // Show the form for adding a new student
+        function mostrarFormulario() {
+            document.getElementById('formularioAlumno').style.display = 'block';
+        }
+
+        // Hide the form
+        function ocultarFormulario() {
+            document.getElementById('formularioAlumno').style.display = 'none';
+        }
+
+        // Add new student to the table
+        function guardarAlumno() {
+            const nombre = document.getElementById('nombre').value;
+            const apellidoPaterno = document.getElementById('apellidoPaterno').value;
+            const apellidoMaterno = document.getElementById('apellidoMaterno').value;
+            const edad = document.getElementById('edad').value;
+            const genero = document.getElementById('genero').value;
+
+            if (nombre && apellidoPaterno && apellidoMaterno && edad && genero) {
+                const table = document.getElementById('tabla_Alumnos').getElementsByTagName('tbody')[0];
+                const row = table.insertRow();
+                row.innerHTML = `
+                    <td>${table.rows.length + 1}</td>
+                    <td>${nombre}</td>
+                    <td>${apellidoPaterno}</td>
+                    <td>${apellidoMaterno}</td>
+                    <td>${edad}</td>
+                    <td>${genero}</td>
+                `;
+                alert("Alumno agregado exitosamente.");
+                ocultarFormulario();
+            } else {
+                alert("Por favor, complete todos los campos.");
+            }
+        }
+    </script>
+</body>
+</html>
